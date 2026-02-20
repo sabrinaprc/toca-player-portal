@@ -28,9 +28,3 @@ npm run dev
 ```
 
 The frontend expects the backend at `http://localhost:4000` in development.
-
-## Build frontend for production
-
-```bash
-cd frontend
-npm run build

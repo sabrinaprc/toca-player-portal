@@ -1,12 +1,15 @@
 import express from "express";
 import path from "path";
 import { readJson, dataPath } from "./readJson";
+import cors from "cors";
 
 type Profile = { id: string; email: string; [k: string]: any };
 type TrainingSession = { id: string; playerId: string; startTime: string; [k: string]: any };
 type Appointment = { id: string; playerId: string; startTime: string; [k: string]: any };
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 app.use(express.json());
 
 app.get("/", (_req, res) => res.send("TOCA API is running. Try /health"));

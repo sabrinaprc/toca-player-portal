@@ -27,4 +27,4 @@ npm install
 npm run dev
 ```
 
-The frontend expects the backend at `http://localhost:4000` in development.
+The frontend expects the backend at `http://localhost:4000` in development. Then click the command + click the link provided by frontend.

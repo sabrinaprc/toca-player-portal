@@ -1,0 +1,441 @@
+/* =========================
+   Global Reset
+========================= */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7f7f7;
+  color: #222;
+}
+
+/* =========================
+   Page Container
+========================= */
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* =========================
+   Login
+========================= */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+}
+
+.login-box {
+  background: #fff;
+  padding: 36px;
+  border-radius: 12px;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.login-box h1 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+/* logo inside the login card */
+.login-logo {
+  height: 36px;
+  width: auto;
+  display: block;
+  margin: 18px auto 0;
+  opacity: 0.95;
+}
+
+/* Hero logo positioned above/outside the login card */
+.login-logo-hero {
+  height: 100px;
+  width: auto;
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1d4ed8;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.login-form button:hover {
+  background: #153db1;
+}
+
+.error {
+  color: #c00;
+  margin-top: 12px;
+}
+
+/* =========================
+   Header / Navbar
+========================= */
+header {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+/* Header left area (logo) */
+.header-left {
+  justify-self: start;
+}
+
+/* Logo sizing: keep aspect ratio, smaller on header */
+.logo {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.header-center {
+  grid-column: 2;
+  text-align: center;
+}
+
+.header-center h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.nav-links {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: 500;
+  transition: opacity 0.15s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+.logout-button {
+  grid-column: 3;
+  justify-self: end;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #f3f4f6;
+}
+
+/* =========================
+   Typography
+========================= */
+h1 {
+  font-size: 30px;
+  margin: 24px 0 16px;
+}
+
+h2 {
+  font-size: 20px;
+  margin: 26px 0 12px;
+}
+
+/* =========================
+   Lists
+========================= */
+.list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+/* =========================
+   Cards (Clickable Rows)
+========================= */
+.card-row {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: 
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* Make past sessions feel clickable */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+.card-row:hover {
+  background: #f8fbff;
+  border-color: #cfe2ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+/* Disable hover / transform / color changes for specific rows */
+.card-row.no-hover {
+  cursor: default;
+  background: #fff;
+  border-color: #e6e6e6;
+  transform: none;
+  box-shadow: none;
+}
+
+.card-row.no-hover:hover {
+  /* keep the same visual state on hover */
+  background: #fff;
+  border-color: #e6e6e6;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =========================
+   Row Layout
+========================= */
+.row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.row-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.row-meta {
+  color: #666;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* =========================
+   Badge
+========================= */
+.badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef5ff;
+  color: #1d4ed8;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =========================
+   Buttons (Global)
+========================= */
+button {
+  cursor: pointer;
+}
+
+/* =========================
+   Generic Page Layout
+========================= */
+
+.page {
+  background: #fff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  display: grid;
+  gap: 18px;
+}
+
+.page h1 {
+  margin: 0 0 6px 0;
+  font-size: 28px;
+}
+
+.section {
+  background: #fbfdff;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #eef2f7;
+}
+
+/* slightly nicer intro paragraph */
+.lead {
+  color: #444;
+  line-height: 1.6;
+  /* margin: 0 0 2px 0; */
+  font-size: 15px;
+}
+
+/* external link styling */
+.external-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.external-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* =========================
+   Profile Panel
+========================= */
+.panel {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.kv:last-child {
+  border-bottom: none;
+}
+
+.k {
+  color: #666;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.v {
+  color: #111;
+  font-weight: 500;
+}
+
+/* =========================
+   Session Details
+========================= */
+
+.back-link {
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.back-link:hover {
+  opacity: 0.7;
+}
+
+.session-card {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.session-header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.session-badge {
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #eef5ff;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.session-meta {
+  margin-top: 16px;
+  display: grid;
+  gap: 6px;
+  color: #444;
+}
+
+.stats-title {
+  margin-top: 24px;
+  margin-bottom: 14px;
+  font-size: 18px;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.stat {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+}
+
+.stat-value {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 600;
+}

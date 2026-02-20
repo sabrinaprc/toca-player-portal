@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, Link, useParams} from "react-router-dom";
+import "./styles.css";
+import logo from "./assets/toca-logo.png";
+import { formatDateTime, getDuration } from "./utils/date";
 
 function Header() {
   const navigate = useNavigate();
@@ -10,19 +13,27 @@ function Header() {
   }
 
   return (
-    <div>
-      <h2>TOCA Player Portal</h2>
+    <header>
+      <div className="header-inner">
+        <div className="header-left">
+          <img src={logo} alt="TOCA logo" className="logo" />
+        </div>
 
-      <nav>
-        <Link to="/home">Home</Link> |{" "}
-        <Link to="/about">About TOCA</Link> |{" "}
-        <Link to="/profile">Profile</Link>
-      </nav>
+        <div className="header-center">
+          <h2>TOCA Player Portal</h2>
 
-      <button onClick={handleLogout}>Logout</button>
+          <nav className="nav-links">
+            <Link to="/home">Home</Link>
+            <Link to="/about">About TOCA</Link>
+            <Link to="/profile">Profile</Link>
+          </nav>
+        </div>
 
-      <hr />
-    </div>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+    </header>
   );
 }
 
@@ -63,22 +74,48 @@ function SignIn() {
   }
 
   return (
-    <div>
-      <h1>TOCA Player Portal</h1>
+    <div className="login-container">
+      <img src={logo} alt="TOCA logo" className="login-logo-hero" />
+      <div className="login-box">
+        <h1>TOCA Player Portal</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button type="submit">Sign In</button>
-      </form>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button type="submit">Sign In</button>
+        </form>
 
-      {error && <p>{error}</p>}
+        {error && <p className="error">{error}</p>}
+      </div>
     </div>
   );
+}
+
+function formatTime(date: Date) {
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+  const hh = String(hours); // no leading zero
+  const mm = String(minutes).padStart(2, "0");
+  return `${hh}:${mm}${ampm}`;
+}
+
+function formatDayTimeRange(startIso: string, endIso?: string) {
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const s = new Date(startIso);
+  const day = days[s.getDay()];
+  const monthDay = `${s.getMonth() + 1}/${s.getDate()}`; // M/D
+  if (endIso) {
+    const e = new Date(endIso);
+    return `${day} ${monthDay} ${formatTime(s)} - ${formatTime(e)}`;
+  }
+  return `${day} ${monthDay} ${formatTime(s)}`;
 }
 
 function Home() {
@@ -134,23 +171,36 @@ function Home() {
   return (
     <div>
       <h1>Home</h1>
-
-      <h2>Past Training Sessions</h2>
-      <ul>
-        {pastSessions.map((s: any) => (
-          <li key={s.id}>
-            <Link to={`/sessions/${s.id}`}>
-              {new Date(s.startTime).toLocaleString()} — {s.trainerName} — Score {s.score}
-            </Link>
-          </li>
+      <h2>Upcoming Appointments</h2>
+      <ul className="list">
+        {futureAppointments.map((a: any) => (
+          <li key={a.id} className="card-row no-hover">
+             <div className="row-top">
+               <div className="row-title">{a.trainerName}</div>
+               <div className="badge">
+                 {getDuration(a.startTime, a.endTime)}
+               </div>
+             </div>
+             <div className="row-meta">
+               {formatDayTimeRange(a.startTime, a.endTime)}
+             </div>
+           </li>
         ))}
       </ul>
 
-      <h2>Future Appointments</h2>
-      <ul>
-        {futureAppointments.map((a: any) => (
-          <li key={a.id}>
-            {new Date(a.startTime).toLocaleString()} — {a.trainerName}
+      <h2>Past Training Sessions</h2>
+      <ul className="list">
+        {pastSessions.map((s: any) => (
+          <li key={s.id} className="card-row">
+            <Link className="card-link" to={`/sessions/${s.id}`}>
+              <div className="row-top">
+                <div className="row-title">{s.trainerName}</div>
+                <div className="badge">Score {s.score}</div>
+              </div>
+              <div className="row-meta">
+                {formatDayTimeRange(s.startTime)}
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
@@ -160,43 +210,45 @@ function Home() {
 
 function About() {
   return (
-    <div>
+    <div className="page">
       <h1>The Next Generation of Soccer Training</h1>
 
-      <p>
+      <p className="lead">
         TOCA Football provides a one-of-a-kind, tech-enhanced soccer experience
         for players of all ages and skill levels. With training centers across
         the United States and Canada, TOCA combines technology, repetition,
         and structured programming to help players improve faster.
       </p>
 
-      <h2>Changing the Future of Soccer Training</h2>
+      <div className="section">
+        <h2>Changing the Future of Soccer Training</h2>
+        <p>
+          From classes for young players to advanced individual and group
+          training sessions, TOCA creates engaging and educational environments
+          where players can build confidence, develop skills, and compete at
+          higher levels.
+        </p>
+      </div>
 
-      <p>
-        From classes for young players to advanced individual and group
-        training sessions, TOCA creates engaging and educational environments
-        where players can build confidence, develop skills, and compete at
-        higher levels.
-      </p>
+      <div className="section">
+        <h2>It All Started with a Tennis Ball</h2>
+        <p>
+          Founder Eddie Lewis discovered that practicing with a smaller ball
+          sharpened his technique and accelerated his development. This
+          “small-is-harder” philosophy became the foundation of TOCA’s
+          training methodology and continues to drive its innovative,
+          performance-focused approach today.
+        </p>
+      </div>
 
-      <h2>It All Started with a Tennis Ball</h2>
-
-      <p>
-        Founder Eddie Lewis discovered that practicing with a smaller ball
-        sharpened his technique and accelerated his development. This
-        “small-is-harder” philosophy became the foundation of TOCA’s
-        training methodology and continues to drive its innovative,
-        performance-focused approach today.
-      </p>
-      <p>
-        <a
-          href="https://www.tocafootball.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn more at tocafootball.com →
-        </a>
-      </p>
+      <a
+        className="external-link"
+        href="https://www.tocafootball.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn more at tocafootball.com →
+      </a>
     </div>
   );
 }
@@ -240,16 +292,45 @@ function Profile() {
   if (!profile) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="page">
       <h1>Profile</h1>
 
-      <p><b>Email:</b> {profile.email}</p>
-      <p><b>Name:</b> {profile.firstName} {profile.lastName}</p>
-      <p><b>Phone:</b> {profile.phone ?? "-"}</p>
-      <p><b>Gender:</b> {profile.gender ?? "-"}</p>
-      <p><b>Date of birth:</b> {profile.dob ?? "-"}</p>
-      <p><b>Center:</b> {profile.centerName ?? "-"}</p>
-      <p><b>Created at:</b> {profile.createdAt ? new Date(profile.createdAt).toLocaleString() : "-"}</p>
+      <div className="panel">
+        <div className="kv">
+          <div className="k">Email</div>
+          <div className="v">{profile.email}</div>
+        </div>
+
+        <div className="kv">
+          <div className="k">Name</div>
+          <div className="v">{profile.firstName} {profile.lastName}</div>
+        </div>
+
+        <div className="kv">
+          <div className="k">Phone</div>
+          <div className="v">{profile.phone ?? "-"}</div>
+        </div>
+
+        <div className="kv">
+          <div className="k">Gender</div>
+          <div className="v">{profile.gender ?? "-"}</div>
+        </div>
+
+        <div className="kv">
+          <div className="k">Date of birth</div>
+          <div className="v">{profile.dob ?? "-"}</div>
+        </div>
+
+        <div className="kv">
+          <div className="k">Location</div>
+          <div className="v">{profile.centerName ?? "-"}</div>
+        </div>
+
+        <div className="kv">
+          <div className="k">Created at</div>
+          <div className="v">{profile.createdAt ? formatDateTime(profile.createdAt) : "-"}</div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -288,26 +369,61 @@ function SessionDetails() {
   if (!session) return <p>Loading...</p>;
 
   return (
-    <div>
-      <p>
-        <Link to="/home">← Back to Home</Link>
-      </p>
+    <div className="page">
+      <Link to="/home" className="back-link">
+        ← Back to Home
+      </Link>
 
-      <h1>Session Details</h1>
+      <div className="session-card">
+        <div className="session-header">
+          <h1>Session Details</h1>
+          <div className="session-badge">
+            {getDuration(session.startTime, session.endTime)}
+          </div>
+        </div>
 
-      <p><b>Trainer:</b> {session.trainerName}</p>
-      <p><b>Start:</b> {new Date(session.startTime).toLocaleString()}</p>
-      <p><b>End:</b> {new Date(session.endTime).toLocaleString()}</p>
+        <div className="session-meta">
+          <div><strong>Trainer:</strong> {session.trainerName}</div>
+          <div>
+            <strong>Time:</strong>{" "}
+            {formatDayTimeRange(session.startTime, session.endTime)}
+          </div>
+        </div>
 
-      <h2>Stats</h2>
-      <ul>
-        <li>Score: {session.score}</li>
-        <li>Goals: {session.numberOfGoals}</li>
-        <li>Best streak: {session.bestStreak}</li>
-        <li>Balls: {session.numberOfBalls}</li>
-        <li>Avg speed of play: {session.avgSpeedOfPlay}</li>
-        <li>Exercises: {session.numberOfExercises}</li>
-      </ul>
+        <h2 className="stats-title">Performance Stats</h2>
+
+        <div className="stats-grid">
+          <div className="stat">
+            <div className="stat-label">Score</div>
+            <div className="stat-value">{session.score}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-label">Goals</div>
+            <div className="stat-value">{session.numberOfGoals}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-label">Best Streak</div>
+            <div className="stat-value">{session.bestStreak}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-label">Balls</div>
+            <div className="stat-value">{session.numberOfBalls}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-label">Avg Speed</div>
+            <div className="stat-value">{session.avgSpeedOfPlay}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-label">Exercises</div>
+            <div className="stat-value">{session.numberOfExercises}</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -318,10 +434,53 @@ export default function App() {
       <Routes>
         <Route path="/" element={<SignIn />} />
 
-        <Route path="/home" element={<><Header /><Home /></>} />
-        <Route path="/about" element={<><Header /><About /></>} />
-        <Route path="/profile" element={<><Header /><Profile /></>} />
-        <Route path="/sessions/:id" element={<><Header /><SessionDetails /></>} />
+        <Route
+          path="/home"
+          element={
+            <>
+              <Header />
+              <div className="page-container">
+                <Home />
+              </div>
+            </>
+          }
+        />
+
+        <Route
+          path="/about"
+          element={
+            <>
+              <Header />
+              <div className="page-container">
+                <About />
+              </div>
+            </>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <>
+              <Header />
+              <div className="page-container">
+                <Profile />
+              </div>
+            </>
+          }
+        />
+
+        <Route
+          path="/sessions/:id"
+          element={
+            <>
+              <Header />
+              <div className="page-container">
+                <SessionDetails />
+              </div>
+            </>
+          }
+        />
 
         <Route path="*" element={<SignIn />} />
       </Routes>

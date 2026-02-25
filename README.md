@@ -8,7 +8,12 @@ A small fullstack demo: React + Vite frontend and a TypeScript Express backend.
 
 ## Prerequisites
 - Node.js (I used v22.22.0)
-- npm (or yarn)
+- npm (comes with Node)
+
+You can check your version with:
+
+```bash
+node -v
 
 ## Run locally (development)
 1. Start the backend (dev):
